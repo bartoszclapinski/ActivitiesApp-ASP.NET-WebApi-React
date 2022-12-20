@@ -25,7 +25,7 @@ function App() {
                 {activity.title}
               </List.Item>
           ))}
-        </List>        
+        </List>
     </div>
   );
 }
