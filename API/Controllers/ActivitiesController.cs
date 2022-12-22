@@ -1,5 +1,6 @@
 ﻿using Application.Activities;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Activity = Domain.Activity;
 
@@ -19,5 +20,11 @@ public class ActivitiesController : BaseApiController
     public async Task<OkResult> GetActivity(Guid id)
     {
         return Ok();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateActivity([FromBody] Activity activity)
+    {
+        return Ok(await Mediator.Send(new Create.Command {Activity = activity}));
     }
 }
