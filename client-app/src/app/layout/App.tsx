@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {Button, Container} from "semantic-ui-react";
+import {Container} from "semantic-ui-react";
 import {Activity} from "../models/activity";
 import NavBar from "./NavBar";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
@@ -16,20 +16,11 @@ function App() {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<Activity | undefined> (undefined);
   const [editMode, setEditMode] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-      agent.Activities.list().then(response => {
-          let activities: Activity[] = [];
-          response.forEach(a => {
-              a.date = a.date.split('T')[0];
-              activities.push(a);
-          });
-          setActivities(response);
-          setLoading(false);
-      })
-  }, []);
+      activityStore.loadActivities();
+  }, [activityStore]);
 
   function handleSelectedActivity(id: string){
       setSelectedActivity(activities.find(a => a.id === id));
@@ -76,17 +67,15 @@ function App() {
       });
   }
 
-  if(loading)
+  if(activityStore.loadingInitial)
       return <LoadingComponent content={"Loading activity data..."} />
 
   return (
     <Fragment>
       <NavBar openForm = {handleFormOpen}/>
         <Container style={{marginTop: '7em'}}>
-            <h2>{activityStore.title}</h2>
-            <Button content={'Add !'} color={'green'} onClick={activityStore.setTitle}/>
             <ActivityDashboard
-                activities={activities}
+                activities={activityStore.activities}
                 selectedActivity={selectedActivity}
                 selectActivity = {handleSelectedActivity}
                 cancelSelectActivity = {handleCancelSelectActivity}
