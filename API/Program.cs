@@ -37,7 +37,7 @@ try
 catch (Exception e)
 {
     var logger = services.GetRequiredService<ILogger<Program>>();
-    logger.LogError(e, "An error occured during migration.");
+    logger.LogError(e, "An error occured during migration");
 }
 
 app.Run();
