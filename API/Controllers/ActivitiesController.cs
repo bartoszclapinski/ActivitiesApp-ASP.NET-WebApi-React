@@ -1,4 +1,5 @@
-﻿using Application.Activities;
+﻿using System.Reflection.Metadata;
+using Application.Activities;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -17,16 +18,9 @@ public class ActivitiesController : BaseApiController
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Activity>> GetActivity(Guid id)
+    public async Task<IActionResult> GetActivity(Guid id) 
     {
-        var activity = await Mediator.Send(new Details.Query {Id = id});
-        
-        if (activity == null)
-        {
-            return NotFound();
-        }
-
-        return activity;
+        return HandleResult(await Mediator.Send(new Details.Query {Id = id}));
     }
 
     [HttpPost]
