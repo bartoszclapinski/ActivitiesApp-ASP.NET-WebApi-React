@@ -33,7 +33,7 @@ export default class ActivityStore {
         this.setLoadingInitial(true);
         try {
             const activities = await agent.Activities.list();
-            activities.forEach(activity => {
+            Array.from(activities).forEach(activity => {
                 this.setActivity(activity);
             });
             this.setLoadingInitial(false);
