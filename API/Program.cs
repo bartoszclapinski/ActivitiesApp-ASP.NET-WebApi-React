@@ -28,6 +28,8 @@ app.UseCors("CorsPolicy");
 
 app.UseHttpsRedirection();
 
+//  You need to authenticate first to authorize user, just a reminder :> 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
