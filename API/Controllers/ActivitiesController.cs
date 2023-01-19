@@ -18,7 +18,6 @@ public class ActivitiesController : BaseApiController
         return HandleResult(await Mediator.Send(new List.Query()));
     }
     
-    [Authorize]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetActivity(Guid id) 
     {
