@@ -15,8 +15,8 @@ export default function HomePage() {
                     APPtivities
                 </Header>
                 <Header inverted content={'Welcome to APPtivities!'} />
-                <Button as={Link} to={'/activities'} size={'huge'} inverted>
-                    Take me to the activities
+                <Button as={Link} to={'/login'} size={'huge'} inverted>
+                    Login
                 </Button>
             </Container>
         </Segment>
