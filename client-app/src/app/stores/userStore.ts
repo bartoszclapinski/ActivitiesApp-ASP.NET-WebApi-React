@@ -3,6 +3,7 @@ import {makeAutoObservable, runInAction} from "mobx";
 import agent from "../api/agent";
 import {store} from "./store";
 import {router} from "../router/Routes";
+import {propagateChangeConfirmed} from "mobx/dist/core/observable";
 
 export default class UserStore {
     user: User | null = null
@@ -28,8 +29,16 @@ export default class UserStore {
 
     logout = () => {
         store.commonStore.setToken(null);
-        localStorage.removeItem('jwt');
         this.user = null;
         router.navigate('/');
+    }
+
+    getUser = async () => {
+        try {
+            const user = await agent.Account.current();
+            runInAction(() => this.user = user);
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
