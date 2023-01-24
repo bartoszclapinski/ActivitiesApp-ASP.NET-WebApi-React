@@ -3,7 +3,6 @@ import {makeAutoObservable, runInAction} from "mobx";
 import agent from "../api/agent";
 import {store} from "./store";
 import {router} from "../router/Routes";
-import {propagateChangeConfirmed} from "mobx/dist/core/observable";
 
 export default class UserStore {
     user: User | null = null
@@ -22,6 +21,7 @@ export default class UserStore {
             store.commonStore.setToken(user.token);
             runInAction(() => this.user = user);
             router.navigate('/activities');
+            store.modalStore.closeModal();
         } catch (error) {
             throw error;
         }
